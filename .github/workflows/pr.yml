@@ -1,11 +1,11 @@
 # Это базовый рабочий процесс, который поможет вам начать работу с Actions
 
-name: CI
+name: PR
 
 # Управляет запуском рабочего процесса
 on:
   # Запускает рабочий процесс при событиях push-запросов, но только для "главной" ветки
-  push:
+  pull_request:
     branches: [ "main" ]
 
 # Запуск рабочего процесса состоит из одного или нескольких заданий, которые могут выполняться последовательно или параллельно
@@ -17,8 +17,13 @@ jobs:
 
     # Шаги представляют собой последовательность задач, которые будут выполнены как часть задания
     steps:
-      # Запускает набор команд с помощью оболочки runners
-      - name: Run a multi-line script
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Run Python script
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          echo hello_world.py
+          python hello_world.py
